@@ -3,8 +3,11 @@ package com.paypal.gdelapena.alaccy;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,10 +17,22 @@ public class ALAccy extends Activity implements ActionBar.TabListener {
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
 
+    public static final String logTag = "ALAccy : ";
+
+    LocationListener _networkListener;
+    LocationListener _gpsListener;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alaccy);
+
+
+        //LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -63,14 +78,53 @@ public class ALAccy extends Activity implements ActionBar.TabListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+
+        if (id == R.id.action_settings){
             return true;
         }
+
+        if (id == R.id.action_startListening){
+            onStartListening(item);
+        }
+
+        if (id == R.id.action_stopListening){
+            onStopListening(item);
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onStartListening(MenuItem item){
+        Log.d(logTag, "Started listening");
+
+        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        _networkListener = new MyLocationListener();
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,0, _networkListener);
+
+        _gpsListener = new MyLocationListener();
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,0, _gpsListener);
+    }
+
+    public void onStopListening(MenuItem item){
+        Log.d(logTag, "Stopped listening");
+        DoStopListening();
+    }
+
+    void DoStopListening(){
+        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        if(_networkListener != null){
+            lm.removeUpdates(_networkListener);
+            _networkListener = null;
+        }
+
+        if(_gpsListener != null){
+            lm.removeUpdates(_gpsListener);
+            _gpsListener = null;
+        }
     }
 
     @Override

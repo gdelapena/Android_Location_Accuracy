@@ -7,9 +7,9 @@ import android.util.Log;
 /**
  * Created by gdelapena on 11/23/14.
  */
-public class LocationListener implements android.location.LocationListener {
+public class MyLocationListener implements android.location.LocationListener {
 
-    final String _logTag = "Monitor Location";
+    final String _logTag = "ALAccy : ";
 
     @Override
     public void onLocationChanged(Location location) {
