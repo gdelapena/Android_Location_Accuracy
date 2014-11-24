@@ -19,7 +19,7 @@ public class ALAccy extends Activity implements ActionBar.TabListener {
 
     public static final String logTag = "ALAccy : ";
 
-    LocationListener _networkListener;
+    public LocationListener _networkListener;
     LocationListener _gpsListener;
 
 
@@ -29,8 +29,6 @@ public class ALAccy extends Activity implements ActionBar.TabListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alaccy);
 
-
-        //LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 
 
@@ -46,6 +44,10 @@ public class ALAccy extends Activity implements ActionBar.TabListener {
         };
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(this, getFragmentManager());
+
+
+        //CoordinatesFragment articleFrag = (CoordinatesFragment) getFragmentManager().findFragmentById(R.id.fragment_coordinates);
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);

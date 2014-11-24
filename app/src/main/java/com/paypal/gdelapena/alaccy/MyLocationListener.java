@@ -1,5 +1,6 @@
 package com.paypal.gdelapena.alaccy;
 
+import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,11 @@ import android.util.Log;
 public class MyLocationListener implements android.location.LocationListener {
 
     final String _logTag = "ALAccy : ";
+    Context mContext;
+
+//    public MyLocationListener(Context context) {
+//        this.mContext = context;
+//    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -19,8 +25,9 @@ public class MyLocationListener implements android.location.LocationListener {
         float accy = location.getAccuracy();
 
         String logMsg = LogHelper.FormatLocationInfo(provider,lat,lng,accy);
-
         Log.d(_logTag, "Monitor Location: " + logMsg);
+
+
     }
 
     @Override
